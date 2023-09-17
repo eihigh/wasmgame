@@ -18,13 +18,13 @@ Enter the name of the new repository and click "Create repository" to create the
 Download the new repository to your local machine via `git clone github.com/<yourname>/<reponame>` and you are ready to go.
 
 ### How to develop
-Run `go run . /tool build` to build the program and generate `game.wasm` and `wasm_exec.js`. However, browser games cannot be launched with a double-click like `.exe` files.
+Run `go run ./tool build` to build the program and generate `game.wasm` and `wasm_exec.js`. However, browser games cannot be launched with a double-click like `.exe` files.
 
-`go run . /tool serve` will start the server and make `http://localhost:8080` accessible, so you can play the game by opening this URL in your browser. `localhost` is a special URL that is not published on the Internet and can be accessed only on your machine.
+`go run ./tool serve` will start the server and make `http://localhost:8080` accessible, so you can play the game by opening this URL in your browser. `localhost` is a special URL that is not published on the Internet and can be accessed only on your machine.
 
 Assets such as images should be placed under the `asset` directory. Unlike normal programs, browser games cannot use `os.Open` to read assets, so use the `open` and `readFile` functions in `main.go` to read them.
 
-While the server is running, `go run . /tool build` will automatically work with the server to reload the browser. Please take advantage of this.
+While the server is running, `go run ./tool build` will automatically work with the server to reload the browser. Please take advantage of this.
 
 ### Publish on GitHub Pages
 You can publish your game to the Internet for free using GitHub Pages. However, as mentioned above, you cannot use GitHub Pages for private repositories with a free account, so please use public repositories.
