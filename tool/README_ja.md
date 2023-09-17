@@ -1,6 +1,6 @@
 ## Command `tool`
 
-(English / 日本語)
+([English](https://github.com/eihigh/wasmgame/blob/main/tool/README.md) / 日本語)
 
 ```
 $ go run ./tool
