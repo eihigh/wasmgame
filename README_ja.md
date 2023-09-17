@@ -1,6 +1,6 @@
 # wasmgame
 
-(English / 日本語)
+([English](https://github.com/eihigh/wasmgame/blob/main/README.md) / 日本語)
 
 Go と Ebitengine でブラウザゲームを開発し、無料でインターネットに公開するためのテンプレートです。
 
@@ -27,7 +27,11 @@ Go と Ebitengine でブラウザゲームを開発し、無料でインター�
 ### GitHub Pages で公開する
 作ったゲームは GitHub Pages を利用し、無料でインターネットに公開することができます。ただし、前述の通り無料アカウントでは非公開リポジトリは GitHub Pages を利用できないので、公開リポジトリを使ってください。
 
-`main` ブランチに git push することで、自動的に GitHub Pages へ公開する処理が始まります。処理が完了したら、`https://<yourname>.github.io/<reponame>` にアクセスし、世界中の誰でも遊べる状態になります。
+まずは、GitHub Pages 機能を有効にします。[⚙ Settings] タブ > サイドバーの [Pages] > [Build and deployment] セクションの、[Source] の選択肢から [GitHub Actions] を選択すると、有効になります。
+
+![GitHub Pages settings](https://github.com/eihigh/wasmgame/assets/44455895/6637c9c0-74f7-4bdc-8c2e-1b2fa950ca98)
+
+有効にしたら、以後 `main` ブランチに git push することで、自動的に GitHub Pages へ公開する処理が始まります。処理が完了したら、`https://<yourname>.github.io/<reponame>` にアクセスし、世界中の誰でも遊べる状態になります。
 
 その他、`tool` の詳しい使い方は、`tool/README.md` を参照してください。
 
