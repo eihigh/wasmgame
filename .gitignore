@@ -1,0 +1,13 @@
+/dist/
+/dist.zip
+wasm_exec.js
+
+*.exe
+*.exe~
+*.wasm
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
