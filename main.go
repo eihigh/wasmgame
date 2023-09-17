@@ -21,7 +21,7 @@ func (g *game) Update() error {
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, string(g.sampleJSON))
+	ebitenutil.DebugPrint(screen, "The content of asset/sample.json is: "+string(g.sampleJSON))
 }
 
 func (g *game) Layout(w, h int) (int, int) {
