@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Game</title>
+
+	<style>
+		body {
+			background-color: black;
+			height: 100vh;
+			margin: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		#loader {
+			border: 0.5rem solid #b0b0b0;
+			border-top: 0.5rem solid #f3f3f3;
+			border-radius: 50%;
+			width: 4rem;
+			height: 4rem;
+			animation: spin 2s linear infinite;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="loader"></div>
+
+	<script src="wasm_exec.js"></script>
+	<script>
+		if (!WebAssembly.instantiateStreaming) { // polyfill
+			WebAssembly.instantiateStreaming = async (resp, importObject) => {
+				const source = await (await resp).arrayBuffer();
+				return await WebAssembly.instantiate(source, importObject);
+			};
+		}
+
+		const go = new Go();
+		WebAssembly.instantiateStreaming(fetch("game.wasm"), go.importObject).then((result) => {
+			document.getElementById("loader").remove();
+			go.run(result.instance);
+		}).catch((err) => {
+			console.error(err);
+		});
+	</script>
+
+</body>
+</html>
