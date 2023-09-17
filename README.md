@@ -4,6 +4,12 @@
 
 This is a template repository for developing browser games with Go and Ebitengine and publishing them on the Internet for free.
 
+## Features
+
+* 🚀 Kickstart your development in no time!
+* 🛠️ Everything you need, right out of the box!
+* 📤 Push to deploy on GitHub Pages – for FREE!
+
 ## Usage
 
 ### Creating a repository from a template
