@@ -11,6 +11,8 @@ Go と Ebitengine でブラウザゲームを開発し、無料でインター�
 
 `Use this template` という緑色のボタンをクリックし、`Create a new repository` を選んでください。
 
+![Create from template](https://github.com/eihigh/wasmgame/assets/44455895/1da9c20e-532c-4585-9953-7f58fb554e38)
+
 リポジトリ作成画面が開くので、複製後の新たなリポジトリ名を入力し、`Create repository` をクリックすると、リポジトリが作成されます。このとき、公開 (Public) か非公開 (Private) を選ぶことができますが、無料アカウントでは非公開リポジトリは GitHub Pages で公開できないので、注意してください。
 
 そのリポジトリを `git clone github.com/<yourname>/<reponame>` で手元にダウンロードすれば、準備は完了です。
