@@ -1,0 +1,23 @@
+name: Update dependencies and create pull request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '^1.21'
+    - name: Update
+      run: go run ./tool update
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: '[create-pull-request] update dependencies'
+        title: 'Update dependencies'
+        delete-branch: true
