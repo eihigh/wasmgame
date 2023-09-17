@@ -49,3 +49,5 @@ Due to Ebitengine specifications, Ebitengine's window control functions such as 
 
 Basically, if the aspect ratio of the screen resolution returned by the `Layout` function in `main.go` matches the aspect ratio of the display area in the HTML, the game will display well without black bars. For example, in this repository, `Layout` returns `1280, 720`, so the aspect ratio of the element on which the game is displayed is set to `aspect-ratio: 16 / 9`.
 
+### License
+This repository is licensed under the BSD Zero Clause License (0BSD). You may omit the original license notice when duplicating or forking this repository.
