@@ -31,6 +31,7 @@ func (g *game) Layout(w, h int) (int, int) {
 func main() {
 	g := &game{}
 	g.sampleJSON, _ = readFile("asset/sample.json")
+	ebiten.SetWindowSize(1280, 720) // has no effect on browser
 	if err := ebiten.RunGame(g); err != nil {
 		panic(err)
 	}
