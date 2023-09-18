@@ -23,7 +23,7 @@ func (g *game) Update() error {
 
 func (g *game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{0, 64, 64, 255})
-	ebitenutil.DebugPrint(screen, "The content of asset/sample.json is: "+string(g.sampleJSON))
+	ebitenutil.DebugPrint(screen, "Hello, wasmgame!\nThe content of asset/sample.json is: "+string(g.sampleJSON))
 }
 
 func (g *game) Layout(w, h int) (int, int) {
