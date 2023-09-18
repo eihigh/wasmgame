@@ -43,7 +43,7 @@ Run `go run ./tool build` to build the program and generate `game.wasm` and `was
 
 Assets such as images should be placed under the `asset` directory. Unlike normal programs, browser games cannot use `os.Open` to read assets, so use the `open` and `readFile` functions in `main.go` to read them. These functions can be used commonly on desktop and browser.
 
-Now your game will also work in the browser!
+Now your game will also work in the browser! Of course, if you build and run the game normally, it will run on the desktop as well.
 
 While the server is running, `go run ./tool build` will automatically work with the server to reload the browser. Please take advantage of this.
 
