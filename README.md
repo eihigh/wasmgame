@@ -33,8 +33,8 @@ Download the new repository to your local machine via `git clone github.com/<you
 ### How to develop
 In addition to the usual Ebitengine development, the following steps will make your game work in the browser!
 
-* Run `go run . /tool build` to build for browsers.
-* Run `go run . /tool serve` and open `http://localhost:8080` in your browser to play your game.
+* Run `go run ./tool build` to build for browsers.
+* Run `go run ./tool serve` and open `http://localhost:8080` in your browser to play your game.
 * Place assets under `asset` and load them with the `open` function instead of `os.Open`.
 
 Run `go run ./tool build` to build the program and generate `game.wasm` and `wasm_exec.js`. However, browser games cannot be launched with a double-click like `.exe` files.
