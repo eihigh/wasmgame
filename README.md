@@ -24,7 +24,7 @@ https://eihigh.github.io/wasmgame/
 4. Go to the directory containing the downloaded `main.go` or `go.mod` and run `go run ./tool build`.
 5. Run `go run ./tool serve` and open `http://localhost:8080` in your browser.
 6. Verify that the game screen appears.
-7. Edit `main.go` to your liking and run `go run ./tool build` again in another terminal with `go run ./tool serve` running to see if the browser reloads automatically.
+7. Edit `main.go` as you want and run `go run ./tool build` again in another terminal with `go run ./tool serve` running to see if the browser reloads automatically.
 8. Repeat 7.
 
 ## Usage
