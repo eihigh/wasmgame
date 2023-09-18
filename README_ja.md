@@ -22,7 +22,7 @@ https://eihigh.github.io/wasmgame/
 2. 新しいリポジトリの名前を入力し、`Create repository` をクリック
 3. その新しいリポジトリを `git clone` でダウンロードする
 4. ダウンロードした `main.go` や `go.mod` のあるディレクトリに移動し、`go run ./tool build` コマンドを実行する
-5. `go run ./tool serve` コマンドを実行したまま、`http://localhost:8080` をブラウザで開く
+5. 次に `go run ./tool serve` コマンドを実行し、そのまま `http://localhost:8080` をブラウザで開く
 6. それらしき画面が表示されることを確かめる
 7. `main.go` を好みで編集し、`go run ./tool serve` を実行したまま、別のターミナルで再度 `go run ./tool build` を実行すると、自動でブラウザがリロードされるのを確かめる
 8. 以降、7. を繰り返す。
