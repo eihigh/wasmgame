@@ -17,6 +17,16 @@ https://eihigh.github.io/wasmgame/
 
 (It's very plain and I'd like to improve it...)
 
+## Tutorial
+1. Click the green button `Use this template` at top of the page and select `Create a new repository`.
+2. Enter a name for your new repository and click `Create repository`.
+3. Download the new repository with `git clone`.
+4. Go to the directory containing the downloaded `main.go` or `go.mod` and run `go run ./tool build`.
+5. Run `go run ./tool serve` and open `http://localhost:8080` in your browser.
+6. Verify that the game screen appears.
+7. Edit `main.go` to your liking and run `go run ./tool build` again in another terminal with `go run ./tool serve` running to see if the browser reloads automatically.
+8. Repeat 7.
+
 ## Usage
 
 ### Creating a repository from a template
