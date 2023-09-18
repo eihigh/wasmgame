@@ -27,7 +27,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 }
 
 func (g *game) Layout(w, h int) (int, int) {
-	return 1280, 720
+	return 640, 360 // Screen resolution (not window size)
 }
 
 func main() {
