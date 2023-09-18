@@ -2,13 +2,20 @@
 
 (English / [日本語](https://github.com/eihigh/wasmgame/blob/main/README_ja.md))
 
-This is a template repository for developing browser games with Go and Ebitengine and publishing them on the Internet for free.
+This is a template repository for publishing games developed with Go and Ebitengine as a browser game on the Internet for free.
+
+Your game will run on both Desktop and Browser with just one command!
 
 ## Features
 
 * 🚀 Kickstart your development in no time!
 * 🛠️ Everything you need, right out of the box!
 * 📤 Push to deploy on GitHub Pages – for FREE!
+
+## Demo
+https://eihigh.github.io/wasmgame/
+
+(It's very plain and I'd like to improve it...)
 
 ## Usage
 
@@ -24,13 +31,23 @@ Enter the name of the new repository and click "Create repository" to create the
 Download the new repository to your local machine via `git clone github.com/<yourname>/<reponame>` and you are ready to go.
 
 ### How to develop
+In addition to the usual Ebitengine development, the following steps will make your game work in the browser!
+
+* Run `go run . /tool build` to build for browsers.
+* Run `go run . /tool serve` and open `http://localhost:8080` in your browser to play your game.
+* Place assets under `asset` and load them with the `open` function instead of `os.Open`.
+
 Run `go run ./tool build` to build the program and generate `game.wasm` and `wasm_exec.js`. However, browser games cannot be launched with a double-click like `.exe` files.
 
 `go run ./tool serve` will start the server and make `http://localhost:8080` accessible, so you can play the game by opening this URL in your browser. `localhost` is a special URL that is not published on the Internet and can be accessed only on your machine.
 
-Assets such as images should be placed under the `asset` directory. Unlike normal programs, browser games cannot use `os.Open` to read assets, so use the `open` and `readFile` functions in `main.go` to read them.
+Assets such as images should be placed under the `asset` directory. Unlike normal programs, browser games cannot use `os.Open` to read assets, so use the `open` and `readFile` functions in `main.go` to read them. These functions can be used commonly on desktop and browser.
+
+Now your game will also work in the browser!
 
 While the server is running, `go run ./tool build` will automatically work with the server to reload the browser. Please take advantage of this.
+
+For more information on how to use the `tool`, please refer to `tool/README.md`.
 
 ### Publish on GitHub Pages
 You can publish your game to the Internet for free using GitHub Pages. However, as mentioned above, you cannot use GitHub Pages for private repositories with a free account, so please use public repositories.
@@ -41,12 +58,17 @@ First, enable the GitHub Pages feature. You can do this by going to the [⚙ Set
 
 Once enabled, `git push` to your `main` branch will automatically start the process of publishing to GitHub Pages. When the process is complete, you can go to `https://<yourname>.github.io/<reponame>` and anyone in the world can play with it.
 
-For more information on how to use the `tool`, please refer to `tool/README.md`.
+### How to design the page
+As you can see in [demo](https://eihigh.github.io/wasmgame/), the game is embedded in a part of the page, and you can freely design outside of it with HTML.
+
+By editing `index.html` in this repository, you can freely design outside of the game. On the other hand, `game.html` is what controls the embedding of the game, so you are unlikely to edit it.
+
+If you know HTML, you can add other files to make it more fancy and link it to your own website. Please also see "Adding Distributions" below.
 
 ## Notes
 
 ### Adding Distributions
-By default, only the `index.html`, `game.html`, `game.wasm`, `wasm_exec.js`, and `asset` directory is published through the server to prevent accidental publication of sensitive data.
+By default, only the `index.html`, `game.html`, `game.wasm`, `wasm_exec.js`, and `asset` directory are published through the server to prevent accidental publication of sensitive data.
 
 To add other files, such as `favicon.ico`, edit `distFiles` in `tool/dist.go`.
 
