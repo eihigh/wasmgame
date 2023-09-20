@@ -14,16 +14,20 @@ import (
 )
 
 type game struct {
+	ticks      int
 	sampleJSON []byte
 }
 
 func (g *game) Update() error {
+	g.ticks++
 	return nil
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{0, 64, 64, 255})
-	ebitenutil.DebugPrint(screen, "Hello, wasmgame!\nThe content of asset/sample.json is: "+string(g.sampleJSON))
+	s := fmt.Sprintf("Hello, wasmgame!\nTicks = %d\nThe content of asset/sample.json is: %s", g.ticks, string(g.sampleJSON))
+	x, y := g.ticks%640, g.ticks%360
+	ebitenutil.DebugPrintAt(screen, s, x, y)
 }
 
 func (g *game) Layout(w, h int) (int, int) {
