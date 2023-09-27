@@ -14,24 +14,17 @@ func update(args []string) error {
 		return fmt.Errorf("workdir is not the project root")
 	}
 
-	log.Println("Update go (go get go)")
-	cmd := exec.Command("go", "get", "go")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("go get go: %w", err)
+	log.Println("Reset dependencies")
+	if err := os.Remove("go.sum"); err != nil {
+		return fmt.Errorf("Remove go.sum: %w", err)
+	}
+	b := []byte("module example.com/game")
+	if err := os.WriteFile("go.mod", b, 0666); err != nil {
+		return fmt.Errorf("Rewrite go.mod: %w", err)
 	}
 
-	log.Println("Update dependencies (go get all)")
-	cmd = exec.Command("go", "get", "all")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("go get all: %w", err)
-	}
-
-	log.Println("Cleanup dependencies (go mod tidy)")
-	cmd = exec.Command("go", "mod", "tidy")
+	log.Println("Update dependencies (go mod tidy)")
+	cmd := exec.Command("go", "mod", "tidy")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
