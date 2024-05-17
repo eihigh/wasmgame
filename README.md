@@ -88,3 +88,5 @@ In this case, if the aspect ratio of the game area specified in HTML does not ma
 
 ### License
 This repository is licensed under the BSD Zero Clause License (0BSD). When duplicating or forking this repository, you may omit or delete the original license notice.
+
+`tool/serve.go` is a modified version of the code from github.com/hajimehoshi/wasmserve licensed under the Apache License 2.0.
