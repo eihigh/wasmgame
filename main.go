@@ -1,16 +1,18 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"image/color"
 	"io"
-	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+
+	fetch "marwan.io/wasm-fetch"
 )
 
 type game struct {
@@ -48,12 +50,11 @@ func main() {
 func open(name string) (io.ReadCloser, error) {
 	name = filepath.Clean(name)
 	if runtime.GOOS == "js" {
-		// TODO: use more lightweight method such as marwan-at-work/wasm-fetch
-		resp, err := http.Get(name)
+		resp, err := fetch.Fetch(name, &fetch.Opts{})
 		if err != nil {
 			return nil, err
 		}
-		return resp.Body, nil
+		return io.NopCloser(bytes.NewReader(resp.Body)), nil
 	}
 
 	return os.Open(name)

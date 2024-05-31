@@ -2,7 +2,10 @@ module example.com/game
 
 go 1.22.3
 
-require github.com/hajimehoshi/ebiten/v2 v2.7.4
+require (
+	github.com/hajimehoshi/ebiten/v2 v2.7.4
+	marwan.io/wasm-fetch v0.1.0
+)
 
 require (
 	github.com/ebitengine/gomobile v0.0.0-20240518074828-e86332849895 // indirect
