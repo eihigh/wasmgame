@@ -2,6 +2,7 @@ package main
 
 import (
 	"archive/zip"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -12,26 +13,32 @@ import (
 	"strings"
 )
 
-const distRoot = "dist"
+const outputDir = "dist"
 
+// distFiles and distDirs are the files and directories to be included in the distribution.
+// If you want to include more files or directories, add them to these lists.
 var distFiles = []string{
 	"index.html",
 	"game.html",
 	"game.wasm",
 	"wasm_exec.js",
+	// "favicon.ico",
+	// ...
 }
 
+// Note that files that start with a dot are excluded even if they are under distDir.
+// To include such files, add them to distFiles individually.
 var distDirs = []string{
 	"asset",
 }
 
 // isDist reports whether the name is part of the distribution.
 func isDist(name string) bool {
-	name = filepath.Clean(name)
+	name, _ = filepath.Abs(name)
 
 	// Return true if the name exactly matches distFiles.
 	for _, f := range distFiles {
-		f = filepath.Clean(f)
+		f, _ = filepath.Abs(f)
 		if name == f {
 			return true
 		}
@@ -45,7 +52,7 @@ func isDist(name string) bool {
 
 	// Return true if the file is under distDirs.
 	for _, d := range distDirs {
-		d = filepath.Clean(d)
+		d, _ = filepath.Abs(d)
 		if strings.HasPrefix(name, d) {
 			return true
 		}
@@ -64,41 +71,42 @@ func dist(args []string) error {
 	}
 
 	zips := flag.Bool("zip", false, "bundle the artifacts as dist.zip")
+	tags := flag.String("tags", "", "Build tags")
 	flag.Parse(args)
 
 	if flag.NArg() > 0 {
-		fmt.Fprintln(os.Stderr, "Unexpected arguments:", flag.Args())
+		fmt.Fprintln(os.Stderr, "unexpected arguments:", flag.Args())
 		flag.Usage()
 	}
 
 	// Build before copying
-	if err := build(nil); err != nil {
+	if err := execBuild(*tags); err != nil {
 		return fmt.Errorf("build: %w", err)
 	}
 
-	// Reset the existing distribution
-	if err := os.RemoveAll(distRoot); err != nil {
+	// Reset the existing output
+	if err := os.RemoveAll(outputDir); err != nil {
 		return fmt.Errorf("remove existing dist: %w", err)
 	}
-	if err := os.MkdirAll(distRoot, 0777); err != nil {
+	if err := os.MkdirAll(outputDir, 0777); err != nil {
 		return fmt.Errorf("ensure dist: %w", err)
 	}
 
-	// Copy files
+	// Copy distFiles
 	for _, f := range distFiles {
-		dst := filepath.Join(distRoot, f)
-		d := filepath.Dir(dst)
-		if err := os.MkdirAll(d, 0777); err != nil {
-			return fmt.Errorf("ensure dir for %s: %w", f, err)
-		}
+		dst := filepath.Join(outputDir, f)
 		if err := copyFile(dst, f); err != nil {
-			return fmt.Errorf("copy file %s: %w", f, err)
+			if errors.Is(err, fs.ErrNotExist) {
+				return fmt.Errorf("files listed in distFiles are required: %s", f)
+			} else {
+				return fmt.Errorf("copy file %s: %w", f, err)
+			}
 		}
 	}
 
 	// Copy directories recursively
 	for _, d := range distDirs {
-		dst := filepath.Join(distRoot, d)
+		dst := filepath.Join(outputDir, d)
 		if err := copyDir(dst, d); err != nil {
 			return fmt.Errorf("copy dir %s: %w", d, err)
 		}
@@ -127,8 +135,13 @@ func copyDir(dst, src string) error {
 			return nil
 		}
 
+		rel, err := filepath.Rel(src, name)
+		if err != nil {
+			return err
+		}
+		dst := filepath.Join(dst, rel)
+
 		// Ensure directory if the entry is a directory
-		dst := filepath.Join(distRoot, name)
 		if entry.IsDir() {
 			if err := os.MkdirAll(dst, 0777); err != nil {
 				return fmt.Errorf("ensure dir for %s: %w", name, err)
@@ -158,6 +171,7 @@ func copyFile(dst, src string) error {
 	if _, err := io.Copy(w, r); err != nil {
 		return err
 	}
+	// We ignore the permissions
 	return nil
 }
 
@@ -169,32 +183,6 @@ func zipDist() error {
 	defer output.Close()
 
 	zw := zip.NewWriter(output)
-	defer zw.Close()
-
-	// Write contents of the distribution to 'dist.zip' recursively
-	return filepath.WalkDir(distRoot, func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return fmt.Errorf("walk %s: %w", name, err)
-		}
-		if entry.IsDir() {
-			return nil
-		}
-
-		f, err := os.Open(name)
-		if err != nil {
-			return fmt.Errorf("open %s: %w", name, err)
-		}
-		defer f.Close()
-
-		rel, _ := filepath.Rel(distRoot, name)
-		w, err := zw.Create(rel)
-		if err != nil {
-			return fmt.Errorf("create %s as %s in zip: %w", name, rel, err)
-		}
-
-		if _, err = io.Copy(w, f); err != nil {
-			return fmt.Errorf("copy %s as %s into zip: %w", name, rel, err)
-		}
-		return nil
-	})
+	zw.AddFS(os.DirFS(outputDir))
+	return zw.Close()
 }

@@ -89,4 +89,4 @@ Ebitengine の仕様上、ブラウザゲームとしてビルドすると、`Se
 ### ライセンス
 このリポジトリはBSD Zero Clause License (0BSD) の下でライセンスされています。このリポジトリを複製やフォークした際は、元のライセンス表記は省略したり削除してかまいません。
 
-`tool/serve.go` は Apache License 2.0 で頒布されている github.com/hajimehoshi/wasmserve を eihigh が改変したものです。
+`tool/serve.go` と `tool/build.go` は Apache License 2.0 で頒布されている github.com/hajimehoshi/wasmserve を eihigh が改変したものです。
